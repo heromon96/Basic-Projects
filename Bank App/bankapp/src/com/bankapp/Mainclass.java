@@ -261,7 +261,7 @@ import java.time.LocalDate;
 			DriverManager.registerDriver(driverref);
 			
 			String dburl="jdbc:mysql://localhost:3306/Bank_Application?user=root&password=root";
-			DriverManager.getConnection(dburl);
+			Connection CONN=DriverManager.getConnection(dburl);
 			
 			String query=" select * from transcation_details where customerid="+this.custid+" ";
 			Statement STMT=CONN.createStatement();
