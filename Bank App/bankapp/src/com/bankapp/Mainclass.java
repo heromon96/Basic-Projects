@@ -29,13 +29,16 @@ import java.time.LocalDate;
 			String email=sc.next();
 			System.out.println("choose c to create account or choose  t to do or check transcation");
 			// TODO Auto-generated method stub
-			int custid=102;
+			
 			char choose=sc.next().charAt(0);
+			
 			if(choose=='c'||choose=='C')
 			{
 			
 			Connection CONN=null;
 			Statement STMT=null;
+			ResultSet RES=null;
+			int custid=0;
 			try {
 				 Driver driverref=new Driver();
 				DriverManager.registerDriver(driverref);
@@ -43,9 +46,22 @@ import java.time.LocalDate;
 				String dburl="jdbc:mysql://localhost:3306/Bank_Application?user=root&password=root";
 				CONN=DriverManager.getConnection(dburl);
 				
-				 final int minBal=1000;
-				String query=" insert into  Bank_Application values(\'"+name+"\',\'"+email+"\',"+custid+","+minBal+" )";
+				String query=" select * from bank_application where customerid=(select max(customerid) from bank_application) ";
 				STMT=CONN.createStatement();
+				
+				RES=STMT.executeQuery(query);
+				while(RES.next())
+				{
+				
+					custid=RES.getInt("customerid")+1;
+					
+				}
+				
+				final int minBal=1000;
+				
+				
+				query=" insert into  Bank_Application values(\'"+name+"\',\'"+email+"\',"+custid+","+minBal+" )";
+				
 				
 				int res=STMT.executeUpdate(query);
 				if(res!=0)
@@ -263,10 +279,20 @@ import java.time.LocalDate;
 			String dburl="jdbc:mysql://localhost:3306/Bank_Application?user=root&password=root";
 			Connection CONN=DriverManager.getConnection(dburl);
 			
-			String query=" select * from transcation_details where customerid="+this.custid+" ";
+			String query=" select name,customerid from Bank_Application where customerid="+this.custid+" ";
 			Statement STMT=CONN.createStatement();
 			
 			ResultSet RES=STMT.executeQuery(query);
+			while(RES.next())
+			{
+				System.out.println("name :"+RES.getString("name"));
+				System.out.println("customer :"+RES.getInt("customerid"));
+			}
+			
+			 query=" select * from transcation_details where customerid="+this.custid+" ";
+			 STMT=CONN.createStatement();
+			
+			 RES=STMT.executeQuery(query);
 			
 			while(RES.next())
 			{
@@ -280,6 +306,16 @@ import java.time.LocalDate;
 				System.out.println("Date :"+date);
 				System.out.println("transcation type :"+trnsType);
 				System.out.println("amount :"+amt);
+				System.out.println();
+			}
+			
+			query="  select Balance from Bank_Application where customerid="+this.custid+" ";
+			STMT=CONN.createStatement();
+			
+			RES=STMT.executeQuery(query);
+			if(RES.next())
+			{
+				System.out.println("Mininmum Balance :"+RES.getFloat("Balance"));
 			}
 			}catch (SQLException e) {
 				// TODO: handle exception
