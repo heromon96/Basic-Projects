@@ -22,22 +22,22 @@ import java.time.LocalDate;
 		
 			System.out.println("Enter your name");
 			String name=sc.next();
-			System.out.println("Name :"+name);
+			
 			System.out.println("enter your mobile number");
 			long mob=sc.nextLong();
 			System.out.println("enter your email id");
 			String email=sc.next();
 			System.out.println("choose c to create account or choose  t to do or check transcation");
 			// TODO Auto-generated method stub
-			
+			Connection CONN=null;
+			Statement STMT=null;
+			ResultSet RES=null;
 			char choose=sc.next().charAt(0);
 			
 			if(choose=='c'||choose=='C')
 			{
 			
-			Connection CONN=null;
-			Statement STMT=null;
-			ResultSet RES=null;
+		
 			int custid=0;
 			try {
 				 Driver driverref=new Driver();
@@ -59,8 +59,25 @@ import java.time.LocalDate;
 				
 				final int minBal=1000;
 				
+				String paswrd="";
+				boolean flag=false;
+				do {
+					System.out.println("create your password");
+					paswrd=sc.next();
+					System.out.println("re-enter your password");
+					String paswrd2=sc.next();
 				
-				query=" insert into  Bank_Application values(\'"+name+"\',\'"+email+"\',"+custid+","+minBal+" )";
+					
+					if(paswrd.equals(paswrd2))
+					{
+						flag=true;
+					}
+					else {
+						System.out.println("password not matching");
+					}
+					
+				}while(flag==false);
+				query=" insert into  Bank_Application values(\'"+name+"\',\'"+email+"\',"+custid+","+minBal+",\'"+paswrd+"\' )";
 				
 				
 				int res=STMT.executeUpdate(query);
@@ -87,6 +104,10 @@ import java.time.LocalDate;
 					{
 						STMT.close();
 					}
+					if(RES!=null)
+					{
+						RES.close();
+					}
 				}catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -97,8 +118,47 @@ import java.time.LocalDate;
 			else {
 		
 			System.out.println("Enter your ID");
-			System.out.println("customer id :");
-			new Bank(sc.nextInt()).show();
+			int custid=sc.nextInt();
+			
+			int c=0;
+			boolean flag=false;
+			do {
+				c++;
+				try {
+				System.out.println("Enter your password");
+				String passwrd=sc.next();
+				 Driver driverref=new Driver();
+				 DriverManager.registerDriver(driverref);
+					
+				String dburl="jdbc:mysql://localhost:3306/Bank_Application?user=root&password=root";
+				CONN=DriverManager.getConnection(dburl);
+				
+				String query=" select cpassword from bank_application where customerid="+custid+" ";
+				STMT=CONN.createStatement();
+				
+				RES=STMT.executeQuery(query);
+				while(RES.next()) {
+				
+					if(RES.getString("cpassword").equals(passwrd))
+					{
+						new Bank(custid).show();
+						flag=true;
+					}
+					
+				}
+				if(flag==false&&c<=3) {
+					System.out.println("incorrect password or ID");
+				}
+				
+				}catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					break;
+				}
+			}while(flag==false&&c<=3);
+			if(c>=3) {
+				System.out.println("you can try after 24hrs");
+			}
 			}
 			
 		}
@@ -158,8 +218,8 @@ import java.time.LocalDate;
 				
 				res=STMT.executeQuery(query);
 				while(res.next()) {
-				bal= res.getInt(("Balance"));
-				bal=bal+amt;
+				bal= res.getInt(("Balance"))+amt;
+				
 				}
 				
 				query=" update Bank_Application set Balance="+bal+" where customerid="+this.custid+" ";
