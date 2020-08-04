@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Atm</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  		<servlet>
+  		<servlet-name>ATM</servlet-name>
+  		<servlet-class>com.atm.service.ATM</servlet-class>
+  		</servlet>
+  		<servlet-mapping>
+  		<servlet-name>ATM</servlet-name>
+  		<url-pattern>/atm</url-pattern></servlet-mapping>
+  		
+  		
+  		<servlet>
+  		<servlet-name>Balance</servlet-name>
+  		<servlet-class>com.atm.service.Balance</servlet-class>
+  		</servlet>
+  		<servlet-mapping>
+  		<servlet-name>Balance</servlet-name>
+  		<url-pattern>/balance</url-pattern></servlet-mapping>
+  		
+  			<servlet>
+  		<servlet-name>DepositMoneyToDB</servlet-name>
+	  		<servlet-class>com.atm.service.DepositMoneyToDB</servlet-class>
+	  		</servlet>
+	  		<servlet-mapping>
+	  		<servlet-name>DepositMoneyToDB</servlet-name>
+	  		<url-pattern>/deposit_to_DB</url-pattern></servlet-mapping>
+	  		
+	  		
+	  				<servlet>
+  		<servlet-name>WithdrawMoneyFromDB</servlet-name>
+	  		<servlet-class>com.atm.service.WithdrawMoneyFromDB</servlet-class>
+	  		</servlet>
+	  		<servlet-mapping>
+	  		<servlet-name>WithdrawMoneyFromDB</servlet-name>
+	  		<url-pattern>/withdraw_from_DB</url-pattern></servlet-mapping>
+	  		
+	  		
+	  				<servlet>
+  		<servlet-name>Transcation_History</servlet-name>
+	  		<servlet-class>com.atm.service.Transcation_History</servlet-class>
+	  		</servlet>
+	  		<servlet-mapping>
+	  		<servlet-name>Transcation_History</servlet-name>
+	  		<url-pattern>/transaction</url-pattern></servlet-mapping>
+  		
+</web-app>
