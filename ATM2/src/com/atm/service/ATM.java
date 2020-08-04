@@ -17,6 +17,24 @@ import com.mysql.jdbc.Driver;
 
 public class ATM extends HttpServlet{
 	static String customer_no;
+	Driver driverref;
+	Connection CONN;
+	Statement STMT;
+	ResultSet RES;
+	public ATM() {
+		Driver driverref;
+		try {
+			driverref = new Driver();
+			DriverManager.registerDriver(driverref);
+			
+			String dburl="jdbc:mysql://localhost:3306/bank_application?user=root&password=root";
+			 CONN=DriverManager.getConnection(dburl);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -24,16 +42,12 @@ public class ATM extends HttpServlet{
         String password=req.getParameter("Password");
         resp.setContentType("text/html");
         try {
-			Driver driverref=new Driver();
-			DriverManager.registerDriver(driverref);
-			
-			String dburl="jdbc:mysql://localhost:3306/bank_application?user=root&password=root";
-			Connection CONN=DriverManager.getConnection(dburl);
+
 			
 			String query=" select cpassword from bank_application  where customerid="+Integer.parseInt(customer_no)+" ";
-			Statement STMT=CONN.createStatement();
+			 STMT=CONN.createStatement();
 			
-			ResultSet RES=STMT.executeQuery(query);
+			 RES=STMT.executeQuery(query);
 			
 			PrintWriter out=resp.getWriter();
 			int count=0;
@@ -85,6 +99,25 @@ public class ATM extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        finally {
+        	try {
+        		if(CONN!=null)
+        		{
+        			CONN.close();
+        		}
+        		if(STMT!=null)
+        		{
+        			STMT.close();
+        		}
+        		if(RES!=null)
+        		{
+        			RES.close();
+        		}
+        	}catch (Exception e2) {
+				// TODO: handle exception
+        		e2.printStackTrace();
+			}
+        }
 			
 	}
 }
