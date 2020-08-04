@@ -2,18 +2,12 @@ package com.atm.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mysql.jdbc.Driver;
 
 public class DepositMoneyToDB extends ATM {
 
@@ -23,18 +17,14 @@ public class DepositMoneyToDB extends ATM {
 		String deposit=req.getParameter("deposit");
 		float balance=0;
 		
-		Driver driverref;
+		
 		try {
-			driverref = new Driver();
-			DriverManager.registerDriver(driverref);
-			
-			String dburl="jdbc:mysql://localhost:3306/bank_application?user=root&password=root";
-			Connection CONN=DriverManager.getConnection(dburl);
+		
 			
 			String query=" select Balance from bank_application where customerid="+customer_no+" ";
-			Statement STMT=CONN.createStatement();
+			 STMT=CONN.createStatement();
 			
-			ResultSet RES=STMT.executeQuery(query);
+			 RES=STMT.executeQuery(query);
 			while(RES.next())
 			{
 				balance=RES.getFloat("Balance")+Integer.parseInt(deposit);
@@ -59,6 +49,25 @@ public class DepositMoneyToDB extends ATM {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 finally {
+	        	try {
+	        		if(CONN!=null)
+	        		{
+	        			CONN.close();
+	        		}
+	        		if(STMT!=null)
+	        		{
+	        			STMT.close();
+	        		}
+	        		if(RES!=null)
+	        		{
+	        			RES.close();
+	        		}
+	        	}catch (Exception e2) {
+					// TODO: handle exception
+	        		e2.printStackTrace();
+				}
+	        }
 	
 		
 	}
