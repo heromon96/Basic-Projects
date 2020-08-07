@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <head>
-    <TITle>Deposit</TITle>
+    <TITle>Withdraw</TITle>
+    <style>
+        body{
+            background-image: url("2.jpg");
+            background-size: cover;
+            background-repeat:no-repeat;
+        }
+        div{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color: aqua;
+            transform: translateY(120%);
+        }
+    </style>
 </head>
 <body align="center">
+    <div>
 <form action="http://localhost:8080/Atm/withdraw_from_DB" method="GET">
-    Enter your amount to Withdraw<br>
-    <input type="number" name="withdraw" reqiured><br><br><br><br><br><br>
+   <i><b> Enter your amount to Withdraw</b></i><br><br>
+    <input type="number" name="withdraw" reqiured><br><br><br><br>
     <input type="submit" name="Enter">
-</form>
+</form></div>
 </body>

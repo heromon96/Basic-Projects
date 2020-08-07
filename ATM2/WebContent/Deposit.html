@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <head>
     <TITle>Deposit</TITle>
+    <style>
+    body{
+        background-image: url("images.jpg");
+        background-size: cover;
+        background-repeat:no-repeat;
+    }
+    div{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        color:black;
+        transform: translateY(120%);
+    }</style>
 </head>
 <body align="center">
+    <div>
 <form action="http://localhost:8080/Atm/deposit_to_DB" method="GET">
-    Enter your amount to Deposit<br>
-    <input type="number" name="deposit" reqiured><br><br><br><br><br><br>
+   <b><i> Enter your amount to Deposit</i></b><br><br>
+    <input type="number" name="deposit" reqiured style="background-color: black; color: wheat;"><br><br><br><br>
     <input type="submit" name="Enter">
-</form>
+</form></div>
 </body>

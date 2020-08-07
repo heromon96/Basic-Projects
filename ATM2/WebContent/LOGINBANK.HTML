@@ -4,12 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank</title>
+    <style>
+        form{
+            background-image: url("money.webp");
+            background-color: black;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: red;
+             font-family: Impact, Charcoal, sans-serif;
+            font-style: italic;
+            font-size: large;
+            transform: translate(100%,10%);
+            width: 30%;
+        }
+        body{
+            background-image: url("1.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body align="center">
-    <form action="http://localhost:8080/Atm/atm" style="border: 2px solid red; padding: 4px;" method="POST">
-    Username :<input type="text" name="Username" required><br>
-    Customer id &nbsp;:<input type="number" name="customerid" required><br>
-    Password :<input type="password" name="Password" required><br>
+    <form action="http://localhost:8080/Atm/atm" style="border: 4px groove red; padding: 4px;" method="POST">
+        <h1 style="font-family: serif;">Login</h1><br><br><br><br>
+   <b> Username :</b><input type="text" name="Username" required><br><br><br>
+   <b>Customer id &nbsp;:</b><input type="number" name="customerid" required><br><br><br>
+    <b> Password :</b><input type="password" name="Password" required><br><br><br><br>
     <input type="submit">
     </form>
 </body>
